@@ -49,9 +49,6 @@ And in some other code:
     validate( [ 5 ], T1[min => 2] );      # passes
     
     validate( [ 0 ], T2[positive => 1] ); # fails!
-    
-    
-    1;
 
 results in
 
@@ -112,7 +109,7 @@ statement, e.g.:
 
 # THANKS
 
-- [TOBYINK](https://metacpan.org/author/TOBYINK) The idea and much of the code was lifted from [Types::XSD::Lite](https://metacpan.org/pod/Types::XSD::Lite).
+- [TOBYINK](https://metacpan.org/author/TOBYINK) The idea and most of the code was lifted from [Types::XSD::Lite](https://metacpan.org/pod/Types::XSD::Lite).
 
 # BUGS AND LIMITATIONS
 
