@@ -106,7 +106,7 @@ sub facetize {
                     $self->inline_check( $var ),
                       map { my $code = $_->[1]->( \%p, $var );
                             delete $p{$_->[0]};
-                            $code || ''
+                            $code || ()
                         } @facets
                     ),
                 );

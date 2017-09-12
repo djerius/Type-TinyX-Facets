@@ -56,7 +56,13 @@ subtest 'T1' => sub {
     ok( ! $T1->check( 5.1 ), 'too big' );
     ok( $T1->check( 0 ), 'just right' );
 
-    like( 
+    ok(
+       lives {
+           $T1 = MyTypes::T1([ min => -3 ]);
+       }, 'construct T1 type with single facet out of several'
+      );
+
+    like(
        dies {
            $T1 = MyTypes::T1([ positive => 1 ]);
        },
