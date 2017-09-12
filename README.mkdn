@@ -1,0 +1,131 @@
+# NAME
+
+Type::TinyX::Facets - Easily create a facet parameterized Type::Tiny type
+
+# VERSION
+
+version 0.01
+
+# SYNOPSIS
+
+    package MyTypes;
+    
+    use Carp;
+    use Type::Utils;
+    use Type::Library -base,
+      -declare => 'T1',
+      'T2';
+    
+    use B qw(perlstring);
+    
+    use Types::Standard -types, 'is_Num';
+    
+    use Type::TinyX::Facets;
+    
+    facet 'min', sub {
+        my ( $o, $var ) = @_;
+        return unless exists $o->{min};
+        croak( "argument to 'min' facet must be a number\n" )
+          unless is_Num( $o->{min} );
+        sprintf( '%s >= %s', $var, perlstring $o->{min} );
+    };
+    
+    facetize qw[min], declare T1, as Num;
+    
+    facetize positive => sub {
+        my ( $o, $var ) = @_;
+        return unless exists $o->{positive};
+        sprintf( '%s > 0', $var );
+      },
+      declare T2, as Num;
+    
+    1;
+
+And in some other code:
+
+    use MyTypes -types;
+    use Type::Params qw[ validate ];
+    
+    validate( [ 5 ], T1[min => 2] );      # passes
+    
+    validate( [ 0 ], T2[positive => 1] ); # fails!
+    
+    
+    1;
+
+results in
+
+    Value "0" did not pass type constraint "T2[positive=>"1"]" (in $_[0]) at examples/synopsis_use.pl line 6
+        Value "0" did not pass type constraint "T2[positive=>"1"]" (in $_[0])
+        "T2[positive=>"1"]" is defined as: (((defined($_) && !ref($_) && Scalar::Util::looks_like_number($_)) and $_ > 0))
+
+# DESCRIPTION
+
+**Type::TinyX::Facets** make it easy to create parameterized types with facets.
+
+# SUBROUTINES
+
+## facet( $name, $coderef )
+
+Declare a facet with the given name and code generator. `$coderef`
+will be called as
+
+    $coderef->( $options, $name );
+
+where `$options` is a hash of the parameters passed to the type, and
+`$name` is the name of the variable to check against.  The code
+should return if the passed options are of no interest (and thus the
+facet should not be applied), otherwise it should return a string
+containing the validation code.  For example, to implement a minimum
+value check:
+
+    facet 'min',
+      sub { my ( $o, $var ) = @_;
+            return unless exists $o->{min};
+            croak( "argument to 'min' facet must be a number\n" )
+              unless is_Num( $o->{min} );
+            sprintf('%s >= %s', $var, perlstring $o->{min} );
+        };
+
+## facetize( @facets, $type )
+
+Add the specified facets to the given type.  The type should not have
+any constraints other than through inheritance from a parent type.
+
+`@facets` is a list of facets.  If a facet was previously created with the
+["facet"](#facet) subroutine, only the name (as a string) need be specified. A facet
+may also be specified as a name, coderef pair, e.g.
+
+    @facets = ( 
+        'min',
+        positive => sub {  my ($o, $var) = @_;
+                           return unless exists $o->{positive};
+                           sprintf('%s > 0', $var);
+                       }
+    );
+
+Typically **facetize** is applied directly to a ["declare" in Type::Utils](https://metacpan.org/pod/Type::Utils#declare)
+statement, e.g.:
+
+    facetize @facets,
+      declare T1, as Num;
+
+# THANKS
+
+- [TOBYINK](https://metacpan.org/author/TOBYINK) The idea and much of the code was lifted from [Types::XSD::Lite](https://metacpan.org/pod/Types::XSD::Lite).
+
+# BUGS AND LIMITATIONS
+
+You can make new bug reports, and view existing ones, through the
+web interface at [https://rt.cpan.org/Public/Dist/Display.html?Name=Type-TinyX-Facets](https://rt.cpan.org/Public/Dist/Display.html?Name=Type-TinyX-Facets).
+
+# AUTHOR
+
+Diab Jerius <djerius@cpan.org>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2017 by Smithsonian Astrophysical Observatory.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
