@@ -45,8 +45,9 @@ use Test2::V0;
 
 
 subtest 'T1' => sub {
+
     my $T1;
-    ok( 
+    ok(
        lives {
            $T1 = MyTypes::T1([ min => -3, max => 5 ]);
        }, 'construct T1 type with valid parameters'
@@ -70,7 +71,7 @@ subtest 'T1' => sub {
          'construct T1 type with unknown parameter'
         );
 
-    like( 
+    like(
        dies {
            $T1 = MyTypes::T1([ min => 'huh?' ]);
        },
@@ -82,7 +83,7 @@ subtest 'T1' => sub {
 
 subtest 'T2' => sub {
     my $T2;
-    ok( 
+    ok(
        lives {
            $T2 = MyTypes::T2([ min => -3, max => 5, positive => 1 ]);
        }, 'construct T2 type with valid parameters'
@@ -94,7 +95,5 @@ subtest 'T2' => sub {
     ok( $T2->check( 0.1 ), 'just right' );
 
 };
-
-
 
 done_testing;

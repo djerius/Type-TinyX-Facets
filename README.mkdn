@@ -93,7 +93,7 @@ any constraints other than through inheritance from a parent type.
 ["facet"](#facet) subroutine, only the name (as a string) need be specified. A facet
 may also be specified as a name, coderef pair, e.g.
 
-    @facets = ( 
+    @facets = (
         'min',
         positive => sub {  my ($o, $var) = @_;
                            return unless exists $o->{positive};

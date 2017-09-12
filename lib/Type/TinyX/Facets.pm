@@ -60,7 +60,7 @@ C<@facets> is a list of facets.  If a facet was previously created with the
 L</facet> subroutine, only the name (as a string) need be specified. A facet
 may also be specified as a name, coderef pair, e.g.
 
-  @facets = ( 
+  @facets = (
       'min',
       positive => sub {  my ($o, $var) = @_;
                          return unless exists $o->{positive};
@@ -180,5 +180,3 @@ B<Type::TinyX::Facets> make it easy to create parameterized types with facets.
 =back
 
 =head1 SEE ALSO
-
-
