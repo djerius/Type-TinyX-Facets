@@ -163,10 +163,6 @@ And in some other code:
 
 # EXAMPLE: examples/synopsis_use.pl
 
-results in
-
-# COMMAND: perl -MTest::Lib -Ilib examples/synopsis_use.pl 2>&1 ; true
-
 =head1 DESCRIPTION
 
 B<Type::TinyX::Facets> make it easy to create parameterized types with facets.
