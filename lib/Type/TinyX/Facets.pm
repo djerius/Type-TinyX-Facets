@@ -156,7 +156,7 @@ __END__
 
 =head1 SYNOPSIS
 
-# EXAMPLE: examples/MyTypes.pm
+# EXAMPLE: t/lib/My/Types.pm
 
 And in some other code:
 
@@ -164,7 +164,7 @@ And in some other code:
 
 results in
 
-# COMMAND: perl -Ilib -Iexamples examples/synopsis_use.pl 2>&1 ; true
+# COMMAND: perl -MTest::Lib -Ilib examples/synopsis_use.pl 2>&1 ; true
 
 =head1 DESCRIPTION
 

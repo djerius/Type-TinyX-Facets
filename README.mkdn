@@ -8,15 +8,12 @@ version 0.01
 
 # SYNOPSIS
 
-    package MyTypes;
+    package My::Types;
     
     use Carp;
     use Type::Utils;
     use Type::Library -base,
-      -declare => 'T1',
-      'T2';
-    
-    use B qw(perlstring);
+      -declare => 'MinMax', 'Positive';
     
     use Types::Standard -types, 'is_Num';
     
@@ -27,34 +24,46 @@ version 0.01
         return unless exists $o->{min};
         croak( "argument to 'min' facet must be a number\n" )
           unless is_Num( $o->{min} );
-        sprintf( '%s >= %s', $var, perlstring $o->{min} );
+        sprintf( '%s >= %s', $var, $o->{min} );
     };
     
-    facetize qw[min], declare T1, as Num;
+    facet 'max', sub {
+        my ( $o, $var ) = @_;
+        return unless exists $o->{max};
+        croak( "argument to 'max' facet must be a number\n" )
+          unless is_Num( $o->{max} );
+        sprintf( '%s <= %s', $var, $o->{max} );
+    };
     
+    facetize qw[min max], declare MinMax, as Num;
+    
+    # on-the-fly creation of a facet
     facetize positive => sub {
         my ( $o, $var ) = @_;
         return unless exists $o->{positive};
+        delete $o->{positive};
         sprintf( '%s > 0', $var );
       },
-      declare T2, as Num;
+      qw[ min max ],
+      declare Positive, as Num;
     
     1;
 
 And in some other code:
 
-    use MyTypes -types;
+    use My::Types -types;
     use Type::Params qw[ validate ];
     
-    validate( [ 5 ], T1[min => 2] );      # passes
+    validate( [ 5 ], MinMax[min => 2] );            # passes
+    validate( [ 5 ], MinMax[min => 2, max => 6] );  # passes
     
-    validate( [ 0 ], T2[positive => 1] ); # fails!
+    validate( [ 0 ], Positive[positive => 1] );     # fails!
+    validate( [ 0 ], Positive[positive => 1] );     # fails!
 
 results in
 
-    Value "0" did not pass type constraint "T2[positive=>"1"]" (in $_[0]) at examples/synopsis_use.pl line 6
-        Value "0" did not pass type constraint "T2[positive=>"1"]" (in $_[0])
-        "T2[positive=>"1"]" is defined as: (((defined($_) && !ref($_) && Scalar::Util::looks_like_number($_)) and $_ > 0))
+    unable to find t/lib directory in /data/pelf1/dj/hd0/axaf/src/Type-TinyX-Facets/examples/ at /proj/axaf/ots/pkgs/perl-5.22/x86_64-linux_debian-9/lib/site_perl/5.22.1/Test/Lib.pm line 32.
+    BEGIN failed--compilation aborted.
 
 # DESCRIPTION
 
