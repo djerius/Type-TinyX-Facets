@@ -22,10 +22,10 @@ my %FACET;
 Declare a facet with the given name and code generator. C<$coderef>
 will be called as
 
-  $coderef->( $options, $name );
+  $coderef->( $options, $name, $facet_name );
 
 where C<$options> is a hash of the parameters passed to the type, and
-C<$name> is the name of the variable to check against.
+C<$name> is the name of the variable to check against.  
 
 The code should return if the passed options are of no interest (and
 thus the facet should not be applied), otherwise it should return a
@@ -108,7 +108,7 @@ sub facetize {
                 '(%s)',
                 join( ' and ',
                     $self->inline_check( $var ),
-                      map { $_->[1]->( \%p, $var ) } @facets
+                      map { $_->[1]->( \%p, $var, $_->[0] ) } @facets
                     ),
                 );
 
