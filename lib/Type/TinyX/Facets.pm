@@ -25,18 +25,21 @@ will be called as
   $coderef->( $options, $name );
 
 where C<$options> is a hash of the parameters passed to the type, and
-C<$name> is the name of the variable to check against.  The code
-should return if the passed options are of no interest (and thus the
-facet should not be applied), otherwise it should return a string
-containing the validation code.  For example, to implement a minimum
-value check:
+C<$name> is the name of the variable to check against.
+
+The code should return if the passed options are of no interest (and
+thus the facet should not be applied), otherwise it should return a
+string containing the validation code.  I<< It must delete the parameters
+that it uses from C<$o> >>.
+
+For example, to implement a minimum value check:
 
   facet 'min',
     sub { my ( $o, $var ) = @_;
           return unless exists $o->{min};
           croak( "argument to 'min' facet must be a number\n" )
             unless is_Num( $o->{min} );
-          sprintf('%s >= %s', $var, perlstring $o->{min} );
+          sprintf('%s >= %s', $var, delete $o->{min} );
       };
 
 =cut
@@ -64,6 +67,7 @@ may also be specified as a name, coderef pair, e.g.
       'min',
       positive => sub {  my ($o, $var) = @_;
                          return unless exists $o->{positive};
+                         delete $o->{positive};
                          sprintf('%s > 0', $var);
                      }
   );
@@ -104,10 +108,7 @@ sub facetize {
                 '(%s)',
                 join( ' and ',
                     $self->inline_check( $var ),
-                      map { my $code = $_->[1]->( \%p, $var );
-                            delete $p{$_->[0]};
-                            $code || ()
-                        } @facets
+                      map { $_->[1]->( \%p, $var ) } @facets
                     ),
                 );
 
