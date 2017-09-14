@@ -85,13 +85,12 @@ And in some other code:
     validate( [ 5 ], MinMax[min => 2] );            # passes
     validate( [ 5 ], MinMax[min => 2, max => 6] );  # passes
     
+    validate( [ 5 ], Bounds[min => 2] );            # passes
+    validate( [ 5 ], Bounds[min => 2, max => 6] );  # passes
+    validate( [ 5 ], Bounds[min => 5, max => 2] );  # fails to construct as min > max
+    
     validate( [ 0 ], Positive[positive => 1] );     # fails!
-    validate( [ 0 ], Positive[positive => 1] );     # fails!
-
-results in
-
-    unable to find t/lib directory in /data/pelf1/dj/hd0/axaf/src/Type-TinyX-Facets/examples/ at /proj/axaf/ots/pkgs/perl-5.22/x86_64-linux_debian-9/lib/site_perl/5.22.1/Test/Lib.pm line 32.
-    BEGIN failed--compilation aborted.
+    validate( [ 1 ], Positive[positive => 1] );     # passes
 
 # DESCRIPTION
 
