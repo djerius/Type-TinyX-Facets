@@ -180,15 +180,25 @@ two elements, an integer and a hash.
 Parameters are passed as a list to the parameterized constraint
 generation machinery, and there is great freedom in how they may be interpreted.
 
-This module makes it easy to create a parameterized type which takes I<name - value> pairs
-or,L<facets|https://en.wikipedia.org/wiki/Faceted_classification>. (The terminology is taken
-from L<Types::XSD::Lite>, upon which this module owes its existence.)
+This module makes it easy to create a parameterized type which takes
+I<name - value> pairs
+or,L<facets|https://en.wikipedia.org/wiki/Faceted_classification>. (The
+terminology is taken from L<Types::XSD::Lite>, to which this module
+owes its existence.)
+
+=head1 LIMITATIONS
+
+Facets defined in one package are not available to another package.
+
 
 =head1 THANKS
 
 =over
 
-=item L<TOBYINK|https://metacpan.org/author/TOBYINK> The idea and most of the code was lifted from L<Types::XSD::Lite>.
+=item L<TOBYINK|https://metacpan.org/author/TOBYINK>
+
+The idea and most of the code was lifted from L<Types::XSD::Lite>.
+Any bugs are definitely mine.
 
 =back
 
