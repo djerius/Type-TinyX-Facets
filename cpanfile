@@ -2,6 +2,7 @@ requires "B" => "0";
 requires "Carp" => "0";
 requires "Exporter::Tiny" => "0";
 requires "Safe::Isa" => "0";
+requires "base" => "0";
 requires "strict" => "0";
 requires "warnings" => "0";
 
@@ -66,7 +67,6 @@ on 'develop' => sub {
   requires "Dist::Zilla::Plugin::Test::Perl::Critic" => "0";
   requires "Dist::Zilla::Plugin::Test::PodSpelling" => "0";
   requires "Dist::Zilla::Plugin::Test::ReportPrereqs" => "0";
-  requires "Dist::Zilla::Plugin::Test::TrailingSpace" => "0";
   requires "Dist::Zilla::Plugin::Test::UnusedVars" => "0";
   requires "Dist::Zilla::Plugin::Test::Version" => "0";
   requires "Dist::Zilla::PluginBundle::Basic" => "0";
@@ -89,7 +89,6 @@ on 'develop' => sub {
   requires "Test::Pod" => "1.41";
   requires "Test::Pod::Coverage" => "1.08";
   requires "Test::Spelling" => "0.12";
-  requires "Test::TrailingSpace" => "0.0203";
   requires "Test::Vars" => "0";
   requires "Test::Version" => "1";
 };
