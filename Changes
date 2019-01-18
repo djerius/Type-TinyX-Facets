@@ -2,7 +2,13 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.03      2019-01-18 16:11:06-05:00 America/New_York
+  [ DISTRIBUTION FIX ]
+    * remove extraneous Makefile.PL from the distribution
+
+
 0.02      2019-01-18 16:11:06-05:00 America/New_York
+
   [ ENHANCEMENT ]
 
     * switch out Data::OptList for Exporter::Tiny ( RT#125681 ++tobyink)
