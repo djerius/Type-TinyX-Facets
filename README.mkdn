@@ -185,12 +185,14 @@ Facets defined in one package are not available to another package.
     The idea and most of the code was lifted from [Types::XSD::Lite](https://metacpan.org/pod/Types::XSD::Lite).
     Any bugs are definitely mine.
 
+# SOURCE
+
+The development version is on GitLab at [https://gitlab.com/djerius/type-tinyx-facets](https://gitlab.com/djerius/type-tinyx-facets).
+
 # BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-[https://rt.cpan.org/Public/Dist/Display.html?Name=Type-TinyX-Facets](https://rt.cpan.org/Public/Dist/Display.html?Name=Type-TinyX-Facets) or
-by email to
-[bug-Type-TinyX-Facets@rt.cpan.org](mailto:bug-Type-TinyX-Facets@rt.cpan.org).
+[https://rt.cpan.org/Public/Dist/Display.html?Name=Type-TinyX-Facets](https://rt.cpan.org/Public/Dist/Display.html?Name=Type-TinyX-Facets)
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
