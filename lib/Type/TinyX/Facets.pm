@@ -25,7 +25,7 @@ will be called as
   $coderef->( $options, $name, $facet_name );
 
 where C<$options> is a hash of the parameters passed to the type, and
-C<$name> is the name of the variable to check against.  
+C<$name> is the name of the variable to check against.
 
 The code should return if the passed options are of no interest (and
 thus the facet should not be applied), otherwise it should return a
@@ -85,10 +85,11 @@ sub facetize {
 
     # type may be first or last parameter
     my $self
-      = $_[-1]->$_isa( 'Type::Tiny' ) ? pop
+      = $_[-1]->$_isa( 'Type::Tiny' )
+      ? pop
       : croak( "type object must be last parameter\n" );
 
-    my $FACET = $FACET{caller()};
+    my $FACET = $FACET{ caller() };
 
     my @facets = map {
         my ( $facet, $sub ) = @{$_};
@@ -97,7 +98,7 @@ sub facetize {
     } @{ Data::OptList::mkopt( \@_ ) };
 
 
-    my $name   = "$self";
+    my $name = "$self";
 
     my $inline_generator = sub {
         my %p_not_destroyed = @_;
@@ -108,9 +109,8 @@ sub facetize {
                 '(%s)',
                 join( ' and ',
                     $self->inline_check( $var ),
-                      map { $_->[1]->( \%p, $var, $_->[0] ) } @facets
-                    ),
-                );
+                    map { $_->[1]->( \%p, $var, $_->[0] ) } @facets ),
+            );
 
             croak sprintf(
                 'Attempt to parameterize type "%s" with unrecognised parameter%s %s',
