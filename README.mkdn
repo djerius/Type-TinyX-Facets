@@ -4,7 +4,7 @@ Type::TinyX::Facets - Easily create a facet parameterized Type::Tiny type
 
 # VERSION
 
-version 0.01
+version 0.02
 
 # SYNOPSIS
 
@@ -13,7 +13,8 @@ version 0.01
     use Carp;
     use Type::Utils;
     use Type::Library -base,
-      -declare => 'MinMax', 'Bounds', 'Positive';
+      -declare => 'MinMax',
+      'Bounds', 'Positive';
     
     use Types::Standard -types, 'is_Num';
     
@@ -82,15 +83,16 @@ And in some other code:
     use My::Types -types;
     use Type::Params qw[ validate ];
     
-    validate( [ 5 ], MinMax[min => 2] );            # passes
-    validate( [ 5 ], MinMax[min => 2, max => 6] );  # passes
+    validate( [5], MinMax [ min => 2 ] );              # passes
+    validate( [5], MinMax [ min => 2, max => 6 ] );    # passes
     
-    validate( [ 5 ], Bounds[min => 2] );            # passes
-    validate( [ 5 ], Bounds[min => 2, max => 6] );  # passes
-    validate( [ 5 ], Bounds[min => 5, max => 2] );  # fails to construct as min > max
+    validate( [5], Bounds [ min => 2 ] );              # passes
+    validate( [5], Bounds [ min => 2, max => 6 ] );    # passes
+    validate( [5], Bounds [ min => 5, max => 2 ] )
+      ;    # fails to construct as min > max
     
-    validate( [ 0 ], Positive[positive => 1] );     # fails!
-    validate( [ 1 ], Positive[positive => 1] );     # passes
+    validate( [0], Positive [ positive => 1 ] );    # fails!
+    validate( [1], Positive [ positive => 1 ] );    # passes
 
 # DESCRIPTION
 
@@ -115,6 +117,12 @@ or,[facets](https://en.wikipedia.org/wiki/Faceted_classification). (The
 terminology is taken from [Types::XSD::Lite](https://metacpan.org/pod/Types::XSD::Lite), to which this module
 owes its existence.)
 
+## Alternate Names
+
+**Type::TinyX::Facets** uses [Exporter::Tiny](https://metacpan.org/pod/Exporter::Tiny), so one might correct(!?) the spelling of ["facetize"](#facetize) thusly:
+
+    use Type::TinyX::Facets facetize => { -as => "facetise" };
+
 # SUBROUTINES
 
 ## facet( $name, $coderef )
@@ -125,7 +133,7 @@ will be called as
     $coderef->( $options, $name, $facet_name );
 
 where `$options` is a hash of the parameters passed to the type, and
-`$name` is the name of the variable to check against.  
+`$name` is the name of the variable to check against.
 
 The code should return if the passed options are of no interest (and
 thus the facet should not be applied), otherwise it should return a

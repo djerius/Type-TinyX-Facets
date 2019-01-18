@@ -8,10 +8,10 @@ use warnings;
 our $VERSION = '0.02';
 
 use B qw(perlstring);
-use Exporter 'import';
+use base 'Exporter::Tiny';
+use Exporter::Tiny qw(mkopt);
 use Carp;
 use Safe::Isa;
-use Data::OptList;
 
 our @EXPORT = qw'facet facetize';
 
@@ -95,7 +95,7 @@ sub facetize {
         my ( $facet, $sub ) = @{$_};
         $sub ||= $FACET->{$facet} || croak( "unknown facet: $facet" );
         [ $facet, $sub ];
-    } @{ Data::OptList::mkopt( \@_ ) };
+    } @{ mkopt( \@_ ) };
 
 
     my $name = "$self";
@@ -186,10 +186,15 @@ or,L<facets|https://en.wikipedia.org/wiki/Faceted_classification>. (The
 terminology is taken from L<Types::XSD::Lite>, to which this module
 owes its existence.)
 
+=head2 Alternate Names
+
+B<Type::TinyX::Facets> uses L<Exporter::Tiny>, so one might correct(!?) the spelling of L</facetize> thusly:
+
+  use Type::TinyX::Facets facetize => { -as => "facetise" };
+
 =head1 LIMITATIONS
 
 Facets defined in one package are not available to another package.
-
 
 =head1 THANKS
 
