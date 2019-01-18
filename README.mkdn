@@ -4,7 +4,7 @@ Type::TinyX::Facets - Easily create a facet parameterized Type::Tiny type
 
 # VERSION
 
-version 0.03
+version 0.04
 
 # SYNOPSIS
 
