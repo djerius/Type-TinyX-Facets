@@ -5,7 +5,7 @@ package Type::TinyX::Facets;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use B qw(perlstring);
 use base 'Exporter::Tiny';
