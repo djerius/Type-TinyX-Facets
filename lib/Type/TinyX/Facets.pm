@@ -154,6 +154,11 @@ sub facetize {
 
 __END__
 
+=for stopwords
+facetize
+TOBYINK
+thusly
+GitLab
 
 =head1 SYNOPSIS
 
